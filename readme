@@ -1,0 +1,17 @@
+#-------------------------------------------- Rabbitmq installation on ubuntu ------------------------------------------
+sudo apt update
+sudo apt install erlang
+
+echo "deb https://dl.bintray.com/rabbitmq/debian $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/bintray.rabbitmq.list
+
+wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
+
+sudo apt update
+sudo apt install rabbitmq-server
+
+sudo systemctl start rabbitmq-server
+sudo systemctl enable rabbitmq-server
+
+sudo systemctl status rabbitmq-server
+#-----------------------------------------------------------------------------------------------------------------------
+
