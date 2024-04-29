@@ -2,7 +2,7 @@ import pika
 
 # Specify the host address and port of the RabbitMQ server running on the remote host
 host = 'localhost'
-port = 4000  # Default port for RabbitMQ
+port = 5672  # Default port for RabbitMQ
 
 # Specify the credentials for authentication
 # credentials = pika.PlainCredentials('rabituser', 'rabituser1234')
