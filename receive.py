@@ -3,14 +3,15 @@ import pika, sys, os
 
 
 def main():
-    host = 'server_ip'
+    host = 'localhost'
     port = 5672  # Default port for RabbitMQ
 
     # Specify the credentials for authentication
-    credentials = pika.PlainCredentials('rabituser', 'rabituser1234')
+    # credentials = pika.PlainCredentials('user', 'password')
 
     # Establish a connection to the RabbitMQ server with the specified credentials
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port, credentials=credentials))
+    # connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port, credentials=credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port))
     channel = connection.channel()
 
     channel.queue_declare(queue='hello')
