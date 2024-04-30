@@ -8,3 +8,12 @@ ENV  RABBITMQ_DEFAULT_PASS=password
 #RUN rabbitmqctl add_user rabituser rabituser1234
 #RUN rabbitmqctl set_user_tags rabituser administrator
 #RUN rabbitmqctl set_permissions -p / rabituser ".*" ".*" ".*"
+FROM python:3
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+COPY receive.py ./
+
+#CMD [ "python", "receive.py" ]

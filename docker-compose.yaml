@@ -2,8 +2,23 @@ version: '3'
 
 services:
   rabbitmq:
-    build: .
+    image: rabbitmq:latest
     container_name: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - rabbitnetwork
+
+  receiver:
+    build: .
+    container_name: receiver
+    command: python receive.py
+    depends_on:
+      - rabbitmq
+    networks:
+      - rabbitnetwork
+
+networks:
+  rabbitnetwork:
+    driver: bridge

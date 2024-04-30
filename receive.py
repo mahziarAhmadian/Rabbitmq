@@ -1,22 +1,32 @@
 #!/usr/bin/env python
 import pika, sys, os
+import time
+
+
+# Wait for RabbitMQ to be ready
+def write_to_txt(message):
+    file_path = os.path.join(os.getcwd(),'sample.txt')
+    with open(file_path, 'a') as file:
+        # Write a message to the file
+        file.write(f"{message}\n")
 
 
 def main():
-    host = 'localhost'
+    host = 'rabbitmq'
     port = 5672  # Default port for RabbitMQ
 
     # Specify the credentials for authentication
-    credentials = pika.PlainCredentials('user', 'password')
-
+    # credentials = pika.PlainCredentials('user', 'password')
     # Establish a connection to the RabbitMQ server with the specified credentials
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port, credentials=credentials))
+    # connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port, credentials=credentials))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=host, port=port))
     channel = connection.channel()
 
     channel.queue_declare(queue='hello')
 
     def callback(ch, method, properties, body):
         print(f" [x] Received {body}")
+        write_to_txt(message=body)
 
     channel.basic_consume(queue='hello', on_message_callback=callback, auto_ack=True)
 
